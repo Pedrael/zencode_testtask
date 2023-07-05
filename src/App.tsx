@@ -1,5 +1,4 @@
 import { Navmenu } from './components/Navmenu'
-import { usePage } from 'vite-plugin-ssr'
 
 const App = () => {
   return (
