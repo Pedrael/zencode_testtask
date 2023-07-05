@@ -5,6 +5,7 @@ import { PageContextProvider } from './usePageContext'
 import type { PageContext } from './types'
 import { Navmenu } from '../components/Navmenu'
 import { CssBaseline, Grid, Stack } from '@mui/material'
+import '../styles/default.scss'
 
 export { PageShell }
 
