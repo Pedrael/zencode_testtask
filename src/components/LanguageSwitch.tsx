@@ -1,5 +1,5 @@
 import { FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export const LanguageSwitch = () => {
@@ -7,7 +7,6 @@ export const LanguageSwitch = () => {
 
   const handleLanguage = ({ target: { value } }: SelectChangeEvent<string>) => {
     i18n.changeLanguage(value)
-    setLanguage(value)
     console.log([...languages])
   }
 
@@ -17,14 +16,12 @@ export const LanguageSwitch = () => {
     console.log([...languages])
   }, [languages])
 
-  const [language, setLanguage] = useState(i18n.language)
-
   return (
     <FormControl variant="standard" fullWidth sx={{ mr: '20px' }}>
       <Select
         labelId="lang"
         id="lang-select"
-        value={language}
+        value={i18n.language}
         label="Age"
         onChange={handleLanguage}
       >
