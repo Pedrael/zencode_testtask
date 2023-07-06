@@ -6,6 +6,7 @@ import type { PageContext } from './types'
 import { Navmenu } from '../components/Navmenu'
 import { CssBaseline, Grid, Stack } from '@mui/material'
 import '../styles/default.scss'
+import { Appmenu } from '../components/Appmenu'
 
 export { PageShell }
 
@@ -21,6 +22,7 @@ function PageShell({
       <I18nextProvider i18n={i18n}>
         <CssBaseline />
         <PageContextProvider pageContext={pageContext}>
+          <Appmenu />
           <Grid container bgcolor="gray" minHeight="100vh">
             <Grid item xs={3}>
               <Navmenu />
