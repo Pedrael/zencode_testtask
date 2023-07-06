@@ -1,6 +1,7 @@
 import { AppBar, Avatar, Box, Toolbar, Typography } from '@mui/material'
 import { Timedisplay } from './Timedisplay'
 import { primary, white } from '../constants'
+import { LanguageSwitch } from './LanguageSwitch'
 
 export const Appmenu = () => {
   return (
@@ -23,7 +24,10 @@ export const Appmenu = () => {
               Inventory
             </Typography>
           </Box>
-          <Timedisplay />
+          <Box display="flex" alignItems="center">
+            <LanguageSwitch />
+            <Timedisplay />
+          </Box>
         </Box>
       </Toolbar>
     </AppBar>
