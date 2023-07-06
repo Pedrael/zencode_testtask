@@ -1,5 +1,4 @@
 import { FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material'
-import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export const LanguageSwitch = () => {
@@ -7,14 +6,9 @@ export const LanguageSwitch = () => {
 
   const handleLanguage = ({ target: { value } }: SelectChangeEvent<string>) => {
     i18n.changeLanguage(value)
-    console.log([...languages])
   }
 
   const languages = [...i18n.languages]
-
-  useEffect(() => {
-    console.log([...languages])
-  }, [languages])
 
   return (
     <FormControl variant="standard" fullWidth sx={{ mr: '20px' }}>
