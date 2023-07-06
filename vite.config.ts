@@ -1,11 +1,12 @@
 import reactRefresh from '@vitejs/plugin-react-refresh'
 import tsconfigPaths from 'vite-tsconfig-paths'
+import ssr from 'vite-plugin-ssr/plugin'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  plugins: [reactRefresh(), tsconfigPaths()],
+  plugins: [reactRefresh(), tsconfigPaths(), ssr()],
   root: './',
-  base: './',
+  base: '/',
   server: {
     // Enable open on the local network.
     open: false,
