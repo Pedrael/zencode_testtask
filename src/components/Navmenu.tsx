@@ -2,18 +2,11 @@ import { Avatar, Badge, Stack } from '@mui/material'
 import { Link } from '../renderer/Link'
 import { useTranslation } from 'react-i18next'
 import { Label } from './Label'
-import { cream, red } from '../constants'
+import { cream, red, Paths } from '../constants'
 import { useState } from 'react'
 
 export const Navmenu = () => {
   const [url, setUrl] = useState<string>('/')
-  enum Paths {
-    Home = '/',
-    Groups = '/groups',
-    Products = '/products',
-    Users = '/users',
-    Settings = '/settings',
-  }
   const { t } = useTranslation()
   return (
     <Stack
