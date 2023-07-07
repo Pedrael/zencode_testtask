@@ -2,24 +2,23 @@ import { Box, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import { black, primary } from '../constants'
+import { useTranslation } from 'react-i18next'
 
 export const Timedisplay = () => {
   const [time, setTime] = useState<Date>(new Date())
+  const { t } = useTranslation()
   useEffect(() => {
-    const timerID = setInterval(() => tick(), 1000)
+    const timerID = setInterval(() => setTime(new Date()), 1000)
 
     return () => {
       clearInterval(timerID)
     }
   }, [])
 
-  const tick = () => {
-    setTime(new Date())
-  }
   return (
     <Box display="flex">
       <Stack mr="30px">
-        <Typography color={black}>Today</Typography>
+        <Typography color={black}>{t('today')}</Typography>
         <Typography color={black}>{time.toLocaleDateString()}</Typography>
       </Stack>
       <Box display="flex" alignItems="end">
