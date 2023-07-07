@@ -8,6 +8,8 @@ import { CssBaseline, Grid, Stack, ThemeProvider } from '@mui/material'
 import '../styles/default.scss'
 import { Appmenu } from '../components/Appmenu'
 import { theme } from '../theme'
+import store from '../store'
+import { Provider } from 'react-redux'
 
 export { PageShell }
 
@@ -22,18 +24,20 @@ function PageShell({
     <React.StrictMode>
       <I18nextProvider i18n={i18n}>
         <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <PageContextProvider pageContext={pageContext}>
+          <Provider store={store}>
+            <CssBaseline />
             <Appmenu />
-            <Grid container bgcolor="gray" minHeight="100vh">
-              <Grid item xs={3}>
-                <Navmenu />
+            <PageContextProvider pageContext={pageContext}>
+              <Grid container bgcolor="gray" minHeight="100vh">
+                <Grid item xs={3}>
+                  <Navmenu />
+                </Grid>
+                <Grid item xs={7}>
+                  <Stack>{children}</Stack>
+                </Grid>
               </Grid>
-              <Grid item xs={7}>
-                <Stack>{children}</Stack>
-              </Grid>
-            </Grid>
-          </PageContextProvider>
+            </PageContextProvider>
+          </Provider>
         </ThemeProvider>
       </I18nextProvider>
     </React.StrictMode>
