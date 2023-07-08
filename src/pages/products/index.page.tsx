@@ -1,18 +1,19 @@
 import { useSelector } from 'react-redux'
-import { State } from '../../types'
+import { RootState } from '../../store'
 
 export const Page = () => {
-  const orders = useSelector((state: State) => state.orders)
+  const orders = useSelector((state: RootState) => state.order.value)
   return (
     <>
       <h1>Products</h1>
       <div>
-        {orders.map(({ title, date, description, products }, id) => (
-          <p key={id}>
-            {String(title)}, {String(date)}, {String(description)},{' '}
-            {String(products)}
-          </p>
-        ))}
+        {orders &&
+          orders.map(({ title, date, description, products, id }) => (
+            <p key={id}>
+              {String(title)}, {String(date)}, {String(description)},{' '}
+              {String(products)}
+            </p>
+          ))}
       </div>
     </>
   )

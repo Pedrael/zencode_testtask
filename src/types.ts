@@ -1,11 +1,6 @@
-export type Action = {
-  type: string
-  payload: Order | Product | Object
-}
-
-export type State = {
-  orders: Array<Order>
-  products: Array<Product>
+export enum ReducerTypes {
+  ADD_ORDER = 'ADD_ORDER',
+  ADD_PRODUCT = 'ADD_PRODUCT',
 }
 
 export type Order = {
