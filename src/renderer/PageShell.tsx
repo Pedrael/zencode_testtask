@@ -4,8 +4,10 @@ import i18n from '../i18n'
 import { PageContextProvider } from './usePageContext'
 import type { PageContext } from './types'
 import { Navmenu } from '../components/Navmenu'
-import { CssBaseline, Grid, Stack } from '@mui/material'
+import { CssBaseline, Grid, Stack, ThemeProvider } from '@mui/material'
 import '../styles/default.scss'
+import { Appmenu } from '../components/Appmenu'
+import { theme } from '../theme'
 
 export { PageShell }
 
@@ -19,17 +21,20 @@ function PageShell({
   return (
     <React.StrictMode>
       <I18nextProvider i18n={i18n}>
-        <CssBaseline />
-        <PageContextProvider pageContext={pageContext}>
-          <Grid container bgcolor="gray" minHeight="100vh">
-            <Grid item xs={3}>
-              <Navmenu />
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <PageContextProvider pageContext={pageContext}>
+            <Appmenu />
+            <Grid container bgcolor="gray" minHeight="100vh">
+              <Grid item xs={3}>
+                <Navmenu />
+              </Grid>
+              <Grid item xs={7}>
+                <Stack>{children}</Stack>
+              </Grid>
             </Grid>
-            <Grid item xs={7}>
-              <Stack>{children}</Stack>
-            </Grid>
-          </Grid>
-        </PageContextProvider>
+          </PageContextProvider>
+        </ThemeProvider>
       </I18nextProvider>
     </React.StrictMode>
   )
