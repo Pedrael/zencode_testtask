@@ -3,26 +3,17 @@ import { useTranslation } from 'react-i18next'
 import { black, gray, primary, white } from '../constants'
 import CircleIcon from '@mui/icons-material/Circle'
 import DeleteIcon from '@mui/icons-material/Delete'
+import { Product } from '../types'
+import { useSelector, useDispatch } from 'react-redux'
+import { RootState } from '../store'
+import { removeProductActionById } from '../slices/productSlice'
+import { AlertDialog } from './AlertDialog'
+import { useState } from 'react'
 
-export type ProductProps = {
-  // = Product when rebase
-  id: number
-  serialNumber: number
-  isNew: number
-  photo: string
-  title: string
-  type: string
-  specification: string
-  guarantee: {
-    start: Date
-    end: Date
-  }
-  price: [{ value: number; symbol: string; isDefault: number }]
-  order: number
-  date: Date
-} & BoxProps
+export type ProductProps = Product & BoxProps
 
 export const ProductCard = ({
+  id,
   photo,
   specification,
   isNew,
@@ -34,6 +25,23 @@ export const ProductCard = ({
   ...props
 }: ProductProps) => {
   const { t } = useTranslation()
+  const [open, setOpen] = useState(false)
+  const dispatch = useDispatch()
+  const orderName = useSelector(
+    (state: RootState) =>
+      state.order.value.find((order) => order.products.find((id) => id))
+        ?.title ?? 'none',
+  )
+  const handleOpen = () => {
+    setOpen(true)
+  }
+  const handleCancel = () => {
+    setOpen(false)
+  }
+  const handleAccept = (id: number) => {
+    setOpen(false)
+    dispatch(removeProductActionById(id))
+  }
   return (
     <Box
       display="flex"
@@ -50,7 +58,7 @@ export const ProductCard = ({
     >
       <CircleIcon fontSize="small" htmlColor={isNew === 1 ? primary : black} />
       <Box component="img" src={photo} alt="Image" />
-      <Typography>{specification}</Typography>
+      <Typography>{type}</Typography>
       <Stack>
         <Typography>
           <Typography component="span" fontSize="0.7rem">
@@ -74,9 +82,19 @@ export const ProductCard = ({
         ))}
       </Stack>
       <Typography>{title}</Typography>
-      <Typography>{type}</Typography>
-      <Typography>{date.toLocaleDateString()}</Typography>
-      <DeleteIcon />
+      <Typography>{orderName}</Typography>
+      <Stack>
+        <Typography fontSize="0.7rem">{date.toDateString()}</Typography>
+        <Typography>{date.toLocaleDateString()}</Typography>
+      </Stack>
+      <DeleteIcon onClick={handleOpen} />
+      <AlertDialog
+        handleOpen={open}
+        handleConfirm={() => handleAccept(id)}
+        handleCancel={handleCancel}
+        title={t('productAlertTitle')}
+        description={t('productAlertDescription')}
+      />
     </Box>
   )
 }
