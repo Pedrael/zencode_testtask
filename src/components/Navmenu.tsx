@@ -6,7 +6,7 @@ import { cream, red, Paths } from '../constants'
 import { useEffect, useState } from 'react'
 
 export const Navmenu = () => {
-  const [url, setUrl] = useState<string | undefined>(undefined)
+  const [url, setUrl] = useState<string>('/')
   const { t } = useTranslation()
 
   useEffect(() => {
