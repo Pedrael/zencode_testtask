@@ -9,6 +9,7 @@ import { RootState } from '../store'
 import { removeProductActionById } from '../slices/productSlice'
 import { AlertDialog } from './AlertDialog'
 import { useState } from 'react'
+import { removeProductFromOrdersActionById } from '../slices/orderSlice'
 
 export type ProductProps = Product & BoxProps
 
@@ -41,6 +42,7 @@ export const ProductCard = ({
   const handleAccept = (id: number) => {
     setOpen(false)
     dispatch(removeProductActionById(id))
+    dispatch(removeProductFromOrdersActionById(id))
   }
   return (
     <Box

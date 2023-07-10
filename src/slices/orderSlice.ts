@@ -19,7 +19,7 @@ export const ordersInitialState: OrderState = {
       title: 'Order 2',
       date: new Date('2017-06-29 12:09:33'),
       description: 'desc',
-      products: [1],
+      products: [1, 2, 3],
     },
     {
       id: 3,
@@ -43,8 +43,38 @@ const orderSlice = createSlice({
         ? [...state.value, ...payload]
         : ordersInitialState.value
     },
+    removeProductFromOrdersActionById: (
+      state: OrderState,
+      { payload }: PayloadAction<number | null>,
+    ) => {
+      state.value = payload
+        ? [
+            ...state.value.map(
+              (order) =>
+                ({
+                  ...order,
+                  products: order.products.filter(
+                    (product) => product !== payload,
+                  ),
+                } as Order),
+            ),
+          ]
+        : ordersInitialState.value
+    },
+    removeOrderActionById: (
+      state: OrderState,
+      { payload }: PayloadAction<number | null>,
+    ) => {
+      state.value = payload
+        ? state.value.filter((item) => item.id !== payload)
+        : ordersInitialState.value
+    },
   },
 })
 
-export const { updateOrderAction } = orderSlice.actions
+export const {
+  updateOrderAction,
+  removeProductFromOrdersActionById,
+  removeOrderActionById,
+} = orderSlice.actions
 export default orderSlice

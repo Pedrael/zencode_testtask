@@ -1,22 +1,16 @@
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
-import { OrderCard } from '../../components/orderCard'
+import { OrderCard, OrderProps } from '../../components/OrderCard'
 
 export const Page = () => {
-  const { id, title, date, description, products } = useSelector(
-    (state: RootState) => state.order.value[0],
-  )
+  const orders = useSelector((state: RootState) => state.order.value)
   return (
     <>
       <h1>Products</h1>
       <div>
-        <OrderCard
-          id={id}
-          title={title}
-          date={date}
-          description={description}
-          products={[...products]}
-        />
+        {orders.map((orders) => (
+          <OrderCard {...(orders as OrderProps)} />
+        ))}
       </div>
     </>
   )

@@ -19,8 +19,8 @@ export const productsInitialState: ProductState = {
         end: new Date('2017-06-29 12:09:33'),
       },
       price: [
-        { value: 100, symbol: Currency.USD, isDefault: 0 },
-        { value: 2600, symbol: Currency.UAH, isDefault: 1 },
+        { value: 101, symbol: Currency.USD, isDefault: 0 },
+        { value: 2602, symbol: Currency.UAH, isDefault: 1 },
       ],
       date: new Date('2017-06-29 12:09:33'),
     },
@@ -37,8 +37,8 @@ export const productsInitialState: ProductState = {
         end: new Date('2017-06-29 12:09:33'),
       },
       price: [
-        { value: 100, symbol: Currency.USD, isDefault: 0 },
-        { value: 2600, symbol: Currency.UAH, isDefault: 1 },
+        { value: 102, symbol: Currency.USD, isDefault: 0 },
+        { value: 2604, symbol: Currency.UAH, isDefault: 1 },
       ],
       date: new Date('2017-06-29 12:09:33'),
     },
@@ -55,8 +55,8 @@ export const productsInitialState: ProductState = {
         end: new Date('2017-06-29 12:09:33'),
       },
       price: [
-        { value: 100, symbol: Currency.USD, isDefault: 0 },
-        { value: 2600, symbol: Currency.UAH, isDefault: 1 },
+        { value: 103, symbol: Currency.USD, isDefault: 0 },
+        { value: 2606, symbol: Currency.UAH, isDefault: 1 },
       ],
       date: new Date('2017-06-29 12:09:33'),
     },

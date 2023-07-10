@@ -1,14 +1,16 @@
 import { Box, BoxProps, Stack, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import { black, gray, primary, white } from '../constants'
-import CircleIcon from '@mui/icons-material/Circle'
+import { gray, white } from '../constants'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { Order, Price, Product } from '../types'
+import { Currency, Order, Price } from '../types'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../store'
-import { useEffect, useMemo, useState } from 'react'
+import { useState } from 'react'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import { ProductCard, ProductProps } from './ProductCard'
+import { AlertDialog } from './AlertDialog'
+import { removeOrderActionById } from '../slices/orderSlice'
 
 export type OrderProps = Order & BoxProps
 
@@ -35,30 +37,24 @@ export const OrderCard = ({
   }
   const handleAccept = (id: number) => {
     setOpen(false)
-    //dispatch(removeProductActionById(id))
+    dispatch(removeOrderActionById(id))
   }
   const handleVisible = () => {
     isVisible(!visible)
   }
-  const sumPrices = productsById.reduce(
-    (accumulator, { price }) => {
-      price.forEach(({ value, symbol }, index) => {
-        const existingPrice: Price[] = accumulator.price.find(
-          ({ symbol }) => symbol === symbol,
-        )
-        if (existingPrice) {
-          existingPrice.value += value
-        } else {
-          accumulator.price.push({ value, symbol, isDefault: 0 })
-        }
+  const prices = productsById.map(({ price }) => price)
+  const sumPrices = (prices: Array<Array<Price>>) => {
+    let value = Object.values(Currency).map(
+      (cur) => ({ value: 0, symbol: cur } as Price),
+    )
+    prices.forEach((p) => {
+      p.forEach((c, i) => {
+        value[i].value += c.value
       })
-      return accumulator
-    },
-    { price: [] },
-  ).price
-  useEffect(() => {
-    console.log(sumPrices)
-  })
+    })
+    return value
+  }
+
   return (
     <Stack>
       <Box
@@ -76,56 +72,34 @@ export const OrderCard = ({
       >
         <Typography>{title}</Typography>
         <Typography>{date.toLocaleDateString()}</Typography>
+        <Stack>
+          {sumPrices(prices).map(
+            ({ value, symbol }) =>
+              value !== 0 && (
+                <Typography>
+                  {value} {symbol}
+                </Typography>
+              ),
+          )}
+        </Stack>
         {visible ? (
           <ExpandLessIcon onClick={() => handleVisible()} />
         ) : (
           <ExpandMoreIcon onClick={() => handleVisible()} />
         )}
-
-        {/* <CircleIcon fontSize="small" htmlColor={isNew === 1 ? primary : black} />
-      <Box component="img" src={photo} alt="Image" />
-      <Typography>{type}</Typography>
-      <Stack>
-        <Typography>
-          <Typography component="span" fontSize="0.7rem">
-            {t('from')}
-          </Typography>{' '}
-          {start.toLocaleDateString()}
-        </Typography>
-        <Typography>
-          <Typography component="span" fontSize="0.7rem">
-            {t('to')}
-          </Typography>{' '}
-          {end.toLocaleDateString()}
-        </Typography>
-      </Stack>
-      <Typography>{isNew === 1 ? t('new') : t('used')}</Typography>
-      <Stack>
-        {price.map((p) => (
-          <Typography fontSize={p.isDefault === 1 ? '1rem' : '0.7rem'}>
-            {p.value} {p.symbol}
-          </Typography>
-        ))}
-      </Stack>
-      <Typography>{title}</Typography>
-      <Typography>{orderName}</Typography>
-      <Stack>
-        <Typography fontSize="0.7rem">{date.toDateString()}</Typography>
-        <Typography>{date.toLocaleDateString()}</Typography>
-      </Stack>
-      <DeleteIcon onClick={handleOpen} /> */}
-        {/* <AlertDialog
-        handleOpen={open}
-        handleConfirm={() => handleAccept(id)}
-        handleCancel={handleCancel}
-        title={t('productAlertTitle')}
-        description={t('productAlertDescription')}
-      /> */}
+        <DeleteIcon onClick={handleOpen} />
+        <AlertDialog
+          handleOpen={open}
+          handleConfirm={() => handleAccept(id)}
+          handleCancel={handleCancel}
+          title={t('productAlertTitle')}
+          description={t('productAlertDescription')}
+        />
       </Box>
-      <Stack visibility={visible ? 'visible' : 'hidden'}>
+      <Stack display={visible ? 'flex' : 'none'}>
         {productsById &&
           productsById.map((product) => (
-            <p>{product.title}</p> // TODO
+            <ProductCard {...(product as ProductProps)} />
           ))}
       </Stack>
     </Stack>
