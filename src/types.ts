@@ -23,13 +23,19 @@ export enum Currency {
   EUR = 'EUR',
 }
 
+export enum productTypes {
+  Monitors = 'Monitors',
+  Keyboards = 'Keyboards',
+  All = 'All',
+}
+
 export type Product = {
   id: number
   serialNumber: number
   isNew: number
   photo: string
   title: string
-  type: string
+  type: productTypes | string
   specification: string
   guarantee: {
     start: Date

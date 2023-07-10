@@ -32,7 +32,7 @@ function PageShell({
                 <Grid item xs={3}>
                   <Navmenu />
                 </Grid>
-                <Grid item xs={7}>
+                <Grid item xs>
                   <Stack>{children}</Stack>
                 </Grid>
               </Grid>

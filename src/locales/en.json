@@ -4,5 +4,13 @@
   "products": "products",
   "users": "users",
   "settings": "settings",
-  "today": "Today"
+  "today": "Today",
+  "from": "From",
+  "to": "To",
+  "new": "New",
+  "used": "Used",
+  "productAlertTitle": "Are you sure you want to delete this product?",
+  "productAlertDescription": "Really?",
+  "agree": "yes",
+  "disagree": "no"
 }

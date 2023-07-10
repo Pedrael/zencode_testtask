@@ -4,5 +4,13 @@
   "products": "продукты",
   "users": "пользователи",
   "settings": "настройки",
-  "today": "Cегодня"
+  "today": "Cегодня",
+  "from": "От",
+  "to": "До",
+  "new": "Нов",
+  "used": "Б/У",
+  "productAlertTitle": "Вы уверены, что хотите удалить продукт?",
+  "productAlertDescription": "Да?",
+  "agree": "Да",
+  "disagree": "Нет"
 }
