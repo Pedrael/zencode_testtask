@@ -4,6 +4,7 @@ import { gray, white } from '../constants'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { Currency, Order, Price } from '../types'
 import { useSelector, useDispatch } from 'react-redux'
+import { createSelector } from '@reduxjs/toolkit'
 import { RootState } from '../store'
 import { useState } from 'react'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
@@ -26,9 +27,12 @@ export const OrderCard = ({
   const [open, setOpen] = useState(false)
   const [visible, isVisible] = useState(false)
   const dispatch = useDispatch()
-  const productsById = useSelector(({ product: { value } }: RootState) =>
-    value.filter((product) => products.includes(product.id)),
+  const productsByIdSelector = createSelector(
+    ({ product: { value } }: RootState) => value,
+    (value) => value.filter((product) => products.includes(product.id)),
   )
+  const productsById = useSelector(productsByIdSelector)
+
   const handleOpen = () => {
     setOpen(true)
   }

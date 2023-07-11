@@ -18,6 +18,7 @@ export const Navmenu = () => {
       alignItems="center"
       justifyContent="center"
       height="100%"
+      maxHeight="100vh"
       borderRight="1px solid black"
       bgcolor={cream}
     >

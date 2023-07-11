@@ -11,6 +11,7 @@ import { ProductCard, ProductProps } from '../../components/ProductCard'
 import { useState } from 'react'
 import { cream } from '../../constants'
 import { useSelector } from 'react-redux'
+import { createSelector } from '@reduxjs/toolkit'
 import { RootState } from '../../store'
 import { productTypes } from '../../types'
 import { useTranslation } from 'react-i18next'
@@ -18,7 +19,11 @@ import { useTranslation } from 'react-i18next'
 export const Page = () => {
   const { t } = useTranslation()
   const [type, setType] = useState<productTypes>(productTypes.All)
-  const products = useSelector((state: RootState) => state.product.value)
+  const productsSelector = createSelector(
+    ({ product: { value } }: RootState) => value,
+    (value) => value,
+  )
+  const products = useSelector(productsSelector)
   const handleChange = ({ target: { value } }: SelectChangeEvent<string>) => {
     setType(productTypes[value as keyof typeof productTypes])
   }
@@ -36,7 +41,7 @@ export const Page = () => {
           variant="filled"
         >
           {Object.entries(productTypes).map((type) => (
-            <MenuItem key={type[0]} value={type[0]}>
+            <MenuItem key={type[1]} value={type[0]}>
               {type[1]}
             </MenuItem>
           ))}

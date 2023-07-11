@@ -2,7 +2,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import productSlice from './slices/productSlice'
 import orderSlice from './slices/orderSlice'
 
-const store = configureStore({
+export const store = configureStore({
   reducer: combineReducers({
     [productSlice.name]: productSlice.reducer,
     [orderSlice.name]: orderSlice.reducer,

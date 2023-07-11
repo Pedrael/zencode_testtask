@@ -3,8 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { black, gray, primary, white } from '../constants'
 import CircleIcon from '@mui/icons-material/Circle'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { Product } from '../types'
+import { Order, Product } from '../types'
 import { useSelector, useDispatch } from 'react-redux'
+import { createSelector } from '@reduxjs/toolkit'
 import { RootState } from '../store'
 import { removeProductActionById } from '../slices/productSlice'
 import { AlertDialog } from './AlertDialog'
@@ -28,11 +29,13 @@ export const ProductCard = ({
   const { t } = useTranslation()
   const [open, setOpen] = useState(false)
   const dispatch = useDispatch()
-  const orderName = useSelector(
-    (state: RootState) =>
-      state.order.value.find((order) => order.products.find((id) => id))
-        ?.title ?? 'none',
+  const orderNameSelector = createSelector(
+    ({ order: { value } }: RootState) => value,
+    (value) =>
+      value.find(({ products }: Order) => products.find((id) => id))?.title ??
+      'none',
   )
+  const orderName = useSelector(orderNameSelector)
   const handleOpen = () => {
     setOpen(true)
   }
