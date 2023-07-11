@@ -47,11 +47,11 @@ export const OrderCard = ({
     let value = Object.values(Currency).map(
       (cur) => ({ value: 0, symbol: cur } as Price),
     )
-    prices.forEach((p) => {
-      p.forEach((c, i) => {
-        value[i].value += c.value
-      })
-    })
+    for (let p of prices) {
+      for (const [i, c] of Object.entries(p)) {
+        value[Number(i)].value += c.value
+      }
+    }
     return value
   }
 
@@ -76,7 +76,7 @@ export const OrderCard = ({
           {sumPrices(prices).map(
             ({ value, symbol }) =>
               value !== 0 && (
-                <Typography>
+                <Typography key={symbol}>
                   {value} {symbol}
                 </Typography>
               ),
@@ -99,7 +99,11 @@ export const OrderCard = ({
       <Stack display={visible ? 'flex' : 'none'}>
         {productsById &&
           productsById.map((product) => (
-            <ProductCard {...(product as ProductProps)} />
+            <ProductCard
+              key={product.id}
+              {...(product as ProductProps)}
+              mb="20px"
+            />
           ))}
       </Stack>
     </Stack>

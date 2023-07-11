@@ -59,7 +59,7 @@ export const ProductCard = ({
       {...props}
     >
       <CircleIcon fontSize="small" htmlColor={isNew === 1 ? primary : black} />
-      <Box component="img" src={photo} alt="Image" />
+      <Box component="img" src={photo} alt="Image" width="50px" />
       <Typography>{type}</Typography>
       <Stack>
         <Typography>
@@ -78,7 +78,10 @@ export const ProductCard = ({
       <Typography>{isNew === 1 ? t('new') : t('used')}</Typography>
       <Stack>
         {price.map((p) => (
-          <Typography fontSize={p.isDefault === 1 ? '1rem' : '0.7rem'}>
+          <Typography
+            key={p.symbol}
+            fontSize={p.isDefault === 1 ? '1rem' : '0.7rem'}
+          >
             {p.value} {p.symbol}
           </Typography>
         ))}

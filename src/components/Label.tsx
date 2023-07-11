@@ -2,7 +2,7 @@ import { Typography, styled } from '@mui/material'
 import { primary } from '../constants'
 
 interface LabelProps {
-  underlined?: boolean
+  underlined: string // warning fix
 }
 
 export const Label = styled(Typography)(({ underlined }: LabelProps) => ({
@@ -14,7 +14,7 @@ export const Label = styled(Typography)(({ underlined }: LabelProps) => ({
   position: 'relative',
   overflow: 'hidden',
 
-  ...(underlined
+  ...(underlined === 'true'
     ? {
         '&:after, &.label-with-underline::after': {
           content: '""',

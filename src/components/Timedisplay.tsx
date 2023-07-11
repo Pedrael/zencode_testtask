@@ -6,8 +6,10 @@ import { useTranslation } from 'react-i18next'
 
 export const Timedisplay = () => {
   const [time, setTime] = useState<Date>(new Date())
+  const [isClient, setIsClient] = useState(false) // required for client-server mismatch fix
   const { t } = useTranslation()
   useEffect(() => {
+    setIsClient(true)
     const timerID = setInterval(() => setTime(new Date()), 1000)
 
     return () => {
@@ -15,7 +17,7 @@ export const Timedisplay = () => {
     }
   }, [])
 
-  return (
+  return isClient ? (
     <Box display="flex">
       <Stack mr="30px">
         <Typography color={black}>{t('today')}</Typography>
@@ -29,5 +31,7 @@ export const Timedisplay = () => {
         </Typography>
       </Box>
     </Box>
+  ) : (
+    <></>
   )
 }

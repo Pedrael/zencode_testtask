@@ -8,9 +8,9 @@ export const productsInitialState: ProductState = {
   value: [
     {
       id: 1,
-      serialNumber: 1234,
+      serialnumber: 1234,
       isNew: 1,
-      photo: 'pathToFile.jpg',
+      photo: './src/assets/pc.png',
       title: 'Product 1',
       type: 'Monitors',
       specification: 'Specification 1',
@@ -26,9 +26,9 @@ export const productsInitialState: ProductState = {
     },
     {
       id: 2,
-      serialNumber: 1234,
+      serialnumber: 1234,
       isNew: 0,
-      photo: 'pathToFile.jpg',
+      photo: './src/assets/pc.png',
       title: 'Product 2',
       type: 'Monitors',
       specification: 'Specification 1',
@@ -44,9 +44,9 @@ export const productsInitialState: ProductState = {
     },
     {
       id: 3,
-      serialNumber: 1234,
+      serialnumber: 1234,
       isNew: 1,
-      photo: 'pathToFile.jpg',
+      photo: './src/assets/pc.png',
       title: 'Product 1',
       type: 'Keyboards',
       specification: 'Specification 1',
