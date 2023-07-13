@@ -1,16 +1,11 @@
 import { useSelector } from 'react-redux'
-import { RootState } from '../../store'
 import { OrderCard, OrderProps } from '../../components/OrderCard'
 import { Container, Typography } from '@mui/material'
 import { cream } from '../../constants'
 import { useTranslation } from 'react-i18next'
-import { createSelector } from '@reduxjs/toolkit'
+import { ordersSelector } from '../../selectors'
 
 export const Page = () => {
-  const ordersSelector = createSelector(
-    ({ order: { value } }: RootState) => value,
-    (value) => value,
-  )
   const orders = useSelector(ordersSelector)
   const { t } = useTranslation()
   return (

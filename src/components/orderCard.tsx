@@ -4,16 +4,19 @@ import { gray, white } from '../constants'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { Currency, Order, Price } from '../types'
 import { useSelector, useDispatch } from 'react-redux'
-import { createSelector } from '@reduxjs/toolkit'
-import { RootState } from '../store'
 import { useState } from 'react'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { ProductCard, ProductProps } from './ProductCard'
 import { AlertDialog } from './AlertDialog'
 import { removeOrderActionById } from '../slices/orderSlice'
+import { productsByIdSelector } from '../selectors'
 
 export type OrderProps = Order & BoxProps
+
+export type reducedPrice = {
+  [key in Currency]: number
+}
 
 export const OrderCard = ({
   id,
@@ -27,11 +30,9 @@ export const OrderCard = ({
   const [open, setOpen] = useState(false)
   const [visible, isVisible] = useState(false)
   const dispatch = useDispatch()
-  const productsByIdSelector = createSelector(
-    ({ product: { value } }: RootState) => value,
-    (value) => value.filter((product) => products.includes(product.id)),
+  const productsById = useSelector((state) =>
+    productsByIdSelector(state, products),
   )
-  const productsById = useSelector(productsByIdSelector)
 
   const handleOpen = () => {
     setOpen(true)
@@ -47,17 +48,18 @@ export const OrderCard = ({
     isVisible(!visible)
   }
   const prices = productsById.map(({ price }) => price)
-  const sumPrices = (prices: Array<Array<Price>>) => {
-    let value = Object.values(Currency).map(
-      (cur) => ({ value: 0, symbol: cur } as Price),
-    )
-    for (let p of prices) {
-      for (const [i, c] of Object.entries(p)) {
-        value[Number(i)].value += c.value
+  const sumPrices = prices.reduce(
+    (acc, pricesOfProduct: Price[]) => {
+      for (let { symbol, value } of pricesOfProduct) {
+        acc = { ...acc, [symbol]: acc[symbol] + value }
       }
-    }
-    return value
-  }
+      return acc
+    },
+    Object.values(Currency).reduce<reducedPrice>(
+      (acc, currency) => ({ ...acc, [currency]: 0 }),
+      {} as reducedPrice,
+    ),
+  )
 
   return (
     <Stack>
@@ -77,14 +79,13 @@ export const OrderCard = ({
         <Typography>{title}</Typography>
         <Typography>{date.toLocaleDateString()}</Typography>
         <Stack>
-          {sumPrices(prices).map(
-            ({ value, symbol }) =>
-              value !== 0 && (
-                <Typography key={symbol}>
-                  {value} {symbol}
-                </Typography>
-              ),
-          )}
+          {Object.entries(sumPrices)
+            .filter((price) => !!price[1])
+            .map((filteredPrice) => (
+              <Typography key={filteredPrice[0]}>
+                {filteredPrice[0]} {filteredPrice[1]}
+              </Typography>
+            ))}
         </Stack>
         {visible ? (
           <ExpandLessIcon onClick={() => handleVisible()} />

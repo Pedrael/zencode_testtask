@@ -11,18 +11,13 @@ import { ProductCard, ProductProps } from '../../components/ProductCard'
 import { useState } from 'react'
 import { cream } from '../../constants'
 import { useSelector } from 'react-redux'
-import { createSelector } from '@reduxjs/toolkit'
-import { RootState } from '../../store'
 import { productTypes } from '../../types'
 import { useTranslation } from 'react-i18next'
+import { productsSelector } from '../../selectors'
 
 export const Page = () => {
   const { t } = useTranslation()
   const [type, setType] = useState<productTypes>(productTypes.All)
-  const productsSelector = createSelector(
-    ({ product: { value } }: RootState) => value,
-    (value) => value,
-  )
   const products = useSelector(productsSelector)
   const handleChange = ({ target: { value } }: SelectChangeEvent<string>) => {
     setType(productTypes[value as keyof typeof productTypes])
