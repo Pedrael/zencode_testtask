@@ -31,7 +31,7 @@ export enum productTypes {
 
 export type Product = {
   id: number
-  serialNumber: number
+  serialnumber: number
   isNew: number
   photo: string
   title: string

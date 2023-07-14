@@ -21,25 +21,23 @@ function PageShell({
   pageContext: PageContext
 }) {
   return (
-    <React.StrictMode>
-      <I18nextProvider i18n={i18n}>
-        <ThemeProvider theme={theme}>
-          <Provider store={store}>
-            <CssBaseline />
-            <Appmenu />
-            <PageContextProvider pageContext={pageContext}>
-              <Grid container bgcolor="gray" minHeight="100vh">
-                <Grid item xs={3}>
-                  <Navmenu />
-                </Grid>
-                <Grid item xs>
-                  <Stack>{children}</Stack>
-                </Grid>
+    <I18nextProvider i18n={i18n}>
+      <ThemeProvider theme={theme}>
+        <Provider store={store}>
+          <CssBaseline />
+          <Appmenu />
+          <PageContextProvider pageContext={pageContext}>
+            <Grid container bgcolor="gray" minHeight="100vh">
+              <Grid item xs={3}>
+                <Navmenu />
               </Grid>
-            </PageContextProvider>
-          </Provider>
-        </ThemeProvider>
-      </I18nextProvider>
-    </React.StrictMode>
+              <Grid item xs>
+                <Stack>{children}</Stack>
+              </Grid>
+            </Grid>
+          </PageContextProvider>
+        </Provider>
+      </ThemeProvider>
+    </I18nextProvider>
   )
 }

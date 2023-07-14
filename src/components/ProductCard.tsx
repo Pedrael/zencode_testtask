@@ -5,10 +5,11 @@ import CircleIcon from '@mui/icons-material/Circle'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { Product } from '../types'
 import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from '../store'
 import { removeProductActionById } from '../slices/productSlice'
 import { AlertDialog } from './AlertDialog'
 import { useState } from 'react'
+import { removeProductFromOrdersActionById } from '../slices/orderSlice'
+import { orderNameSelector } from '../selectors'
 
 export type ProductProps = Product & BoxProps
 
@@ -27,11 +28,7 @@ export const ProductCard = ({
   const { t } = useTranslation()
   const [open, setOpen] = useState(false)
   const dispatch = useDispatch()
-  const orderName = useSelector(
-    (state: RootState) =>
-      state.order.value.find((order) => order.products.find((id) => id))
-        ?.title ?? 'none',
-  )
+  const orderName = useSelector(orderNameSelector)
   const handleOpen = () => {
     setOpen(true)
   }
@@ -41,6 +38,7 @@ export const ProductCard = ({
   const handleAccept = (id: number) => {
     setOpen(false)
     dispatch(removeProductActionById(id))
+    dispatch(removeProductFromOrdersActionById(id))
   }
   return (
     <Box
@@ -57,7 +55,7 @@ export const ProductCard = ({
       {...props}
     >
       <CircleIcon fontSize="small" htmlColor={isNew === 1 ? primary : black} />
-      <Box component="img" src={photo} alt="Image" />
+      <Box component="img" src={photo} alt="Image" width="50px" />
       <Typography>{type}</Typography>
       <Stack>
         <Typography>
@@ -76,7 +74,10 @@ export const ProductCard = ({
       <Typography>{isNew === 1 ? t('new') : t('used')}</Typography>
       <Stack>
         {price.map((p) => (
-          <Typography fontSize={p.isDefault === 1 ? '1rem' : '0.7rem'}>
+          <Typography
+            key={p.symbol}
+            fontSize={p.isDefault === 1 ? '1rem' : '0.7rem'}
+          >
             {p.value} {p.symbol}
           </Typography>
         ))}

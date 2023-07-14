@@ -18,6 +18,7 @@ export const Navmenu = () => {
       alignItems="center"
       justifyContent="center"
       height="100%"
+      maxHeight="100vh"
       borderRight="1px solid black"
       bgcolor={cream}
     >
@@ -40,23 +41,23 @@ export const Navmenu = () => {
         />
       </Badge>
 
-      <Label gutterBottom underlined={url === Paths.Home}>
+      <Label gutterBottom underlined={String(url === Paths.Home)}>
         <Link href={Paths.Home}>{t('arrival')}</Link>
       </Label>
 
-      <Label gutterBottom underlined={url === Paths.Groups}>
+      <Label gutterBottom underlined={String(url === Paths.Groups)}>
         <Link href={Paths.Groups}> {t('groups')}</Link>
       </Label>
 
-      <Label gutterBottom underlined={url === Paths.Products}>
+      <Label gutterBottom underlined={String(url === Paths.Products)}>
         <Link href={Paths.Products}>{t('products')}</Link>
       </Label>
 
-      <Label gutterBottom underlined={url === Paths.Users}>
+      <Label gutterBottom underlined={String(url === Paths.Users)}>
         <Link href={Paths.Users}>{t('users')}</Link>
       </Label>
 
-      <Label gutterBottom underlined={url === Paths.Settings}>
+      <Label gutterBottom underlined={String(url === Paths.Settings)}>
         <Link href={Paths.Settings}>{t('settings')}</Link>
       </Label>
     </Stack>
