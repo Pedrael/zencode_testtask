@@ -12,7 +12,7 @@ import { AlertDialog } from './AlertDialog'
 import { removeOrderActionById } from '../slices/orderSlice'
 import { productsByIdSelector } from '../selectors'
 
-export type OrderProps = Order & BoxProps
+export type OrderProps = Order & Omit<BoxProps, 'id'>
 
 export type reducedPrice = {
   [key in Currency]: number
@@ -92,7 +92,7 @@ export const OrderCard = ({
         ) : (
           <ExpandMoreIcon onClick={() => handleVisible()} />
         )}
-        <DeleteIcon onClick={handleOpen} />
+        <DeleteIcon aria-label="Delete Icon" onClick={handleOpen} />
         <AlertDialog
           handleOpen={open}
           handleConfirm={() => handleAccept(id)}
