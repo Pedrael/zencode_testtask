@@ -11,12 +11,11 @@ import { useState } from 'react'
 import { removeProductFromOrdersActionById } from '../slices/orderSlice'
 import { orderNameSelector } from '../selectors'
 
-export type ProductProps = Product & BoxProps
+export type ProductProps = Product & Omit<BoxProps, 'id'>
 
 export const ProductCard = ({
   id,
   photo,
-  specification,
   isNew,
   guarantee: { start, end },
   price,
@@ -88,7 +87,7 @@ export const ProductCard = ({
         <Typography fontSize="0.7rem">{date.toDateString()}</Typography>
         <Typography>{date.toLocaleDateString()}</Typography>
       </Stack>
-      <DeleteIcon onClick={handleOpen} />
+      <DeleteIcon data-testid="delete-icon" onClick={handleOpen} />
       <AlertDialog
         handleOpen={open}
         handleConfirm={() => handleAccept(id)}

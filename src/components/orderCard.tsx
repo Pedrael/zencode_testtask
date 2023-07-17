@@ -22,7 +22,6 @@ export const OrderCard = ({
   id,
   title,
   date,
-  description,
   products,
   ...props
 }: OrderProps) => {
@@ -50,7 +49,7 @@ export const OrderCard = ({
   const prices = productsById.map(({ price }) => price)
   const sumPrices = prices.reduce(
     (acc, pricesOfProduct: Price[]) => {
-      for (let { symbol, value } of pricesOfProduct) {
+      for (const { symbol, value } of pricesOfProduct) {
         acc = { ...acc, [symbol]: acc[symbol] + value }
       }
       return acc
@@ -92,7 +91,7 @@ export const OrderCard = ({
         ) : (
           <ExpandMoreIcon onClick={() => handleVisible()} />
         )}
-        <DeleteIcon aria-label="Delete Icon" onClick={handleOpen} />
+        <DeleteIcon onClick={handleOpen} />
         <AlertDialog
           handleOpen={open}
           handleConfirm={() => handleAccept(id)}
