@@ -12,8 +12,8 @@ import { white } from '../constants'
 
 interface AlertDialogProps {
   handleOpen: boolean
-  handleConfirm: Function
-  handleCancel: Function
+  handleConfirm: () => void
+  handleCancel: () => void
   title: string
   description: string
 }
@@ -53,6 +53,7 @@ export const AlertDialog = ({
           {t('disagree')}
         </Button>
         <Button
+          data-testid="dialog-approver"
           onClick={handleClickConfirm}
           variant="contained"
           startIcon={<DeleteIcon />}

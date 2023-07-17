@@ -12,7 +12,7 @@ import { AlertDialog } from './AlertDialog'
 import { removeOrderActionById } from '../slices/orderSlice'
 import { productsByIdSelector } from '../selectors'
 
-export type OrderProps = Order & BoxProps
+export type OrderProps = Order & Omit<BoxProps, 'id'>
 
 export type reducedPrice = {
   [key in Currency]: number
@@ -22,7 +22,6 @@ export const OrderCard = ({
   id,
   title,
   date,
-  description,
   products,
   ...props
 }: OrderProps) => {
@@ -50,7 +49,7 @@ export const OrderCard = ({
   const prices = productsById.map(({ price }) => price)
   const sumPrices = prices.reduce(
     (acc, pricesOfProduct: Price[]) => {
-      for (let { symbol, value } of pricesOfProduct) {
+      for (const { symbol, value } of pricesOfProduct) {
         acc = { ...acc, [symbol]: acc[symbol] + value }
       }
       return acc
